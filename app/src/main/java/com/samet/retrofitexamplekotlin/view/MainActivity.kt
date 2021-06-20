@@ -1,22 +1,26 @@
 package com.samet.retrofitexamplekotlin.view
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.samet.retrofitexamplekotlin.R
+import com.samet.retrofitexamplekotlin.adapter.RecyclerViewAdapter
 import com.samet.retrofitexamplekotlin.model.CryptoModel
 import com.samet.retrofitexamplekotlin.service.CryptoAPI
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RecyclerViewAdapter.RowHolder.Listener {
 
     private val baseurl = "https://api.nomics.com/v1/"
     private var cryptoModels: ArrayList<CryptoModel>? = null
-
-
+    private var recyclerViewAdapter: RecyclerViewAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +28,11 @@ class MainActivity : AppCompatActivity() {
 
         //https://api.nomics.com/v1/prices?key=024f6481805453104b95c4de4e7f5e37778b637d
         //024f6481805453104b95c4de4e7f5e37778b637d
+
+        //RecyclerView
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+
 
         loadData()
 
@@ -45,11 +54,14 @@ class MainActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful){
                     response.body()?.let {
-                        cryptoModels=ArrayList(it)
-                        for (cryptoModel:CryptoModel in cryptoModels!!){
-                            println(cryptoModel.currency)
-                            println(cryptoModel.price)
+                        cryptoModels = ArrayList(it)
+
+                        cryptoModels?.let {
+                            recyclerViewAdapter = RecyclerViewAdapter(it, this@MainActivity)
+
+                            recyclerView.adapter = recyclerViewAdapter
                         }
+
                     }
                 }
             }
@@ -61,4 +73,8 @@ class MainActivity : AppCompatActivity() {
 
         })
     }
+
+    override fun onItemClick(cryptoModel: CryptoModel) {
+        Toast.makeText(this, "Clicked:${cryptoModel.currency}", Toast.LENGTH_LONG).show()
     }
+}
