@@ -1,7 +1,7 @@
 package com.samet.retrofitexamplekotlin.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.samet.retrofitexamplekotlin.R
 import com.samet.retrofitexamplekotlin.model.CryptoModel
 import com.samet.retrofitexamplekotlin.service.CryptoAPI
@@ -13,8 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
-    private val BASE_URL ="https://api.nomics.com/v1"
-    private var cryptoModels:ArrayList<CryptoModel>?=null
+    private val baseurl = "https://api.nomics.com/v1/"
+    private var cryptoModels: ArrayList<CryptoModel>? = null
 
 
 
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private  fun loadData(){
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(baseurl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
