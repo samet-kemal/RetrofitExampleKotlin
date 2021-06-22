@@ -1,7 +1,7 @@
 package com.samet.retrofitexamplekotlin.service
 
-import android.database.Observable
 import com.samet.retrofitexamplekotlin.model.CryptoModel
+import retrofit2.Response
 import retrofit2.http.GET
 
 interface CryptoAPI {
@@ -10,7 +10,7 @@ interface CryptoAPI {
     // prices?key=024f6481805453104b95c4de4e7f5e37778b637d
     //024f6481805453104b95c4de4e7f5e37778b637d
     @GET("prices?key=024f6481805453104b95c4de4e7f5e37778b637d")
-    fun getData(): Observable<List<CryptoModel>>
+    suspend fun getData(): Response<List<CryptoModel>>
 
     //fun getData(): Call<List<CryptoModel>>
 }
