@@ -31,8 +31,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.RowHolder.Listener
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //https://api.nomics.com/v1/prices?key=024f6481805453104b95c4de4e7f5e37778b637d
-        //024f6481805453104b95c4de4e7f5e37778b637d
+
 
 
         compositDesposable = CompositeDisposable()
